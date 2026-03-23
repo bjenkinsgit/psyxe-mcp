@@ -113,11 +113,7 @@ Edit `~/.codeium/windsurf/mcp_config.json`:
 
 ### OpenAI Codex CLI
 
-```bash
-codex mcp add psyxe --command /absolute/path/to/psyxe-mcp
-```
-
-Or edit `~/.codex/config.toml`:
+Edit `~/.codex/config.toml`:
 
 ```toml
 [mcp_servers.psyxe]
