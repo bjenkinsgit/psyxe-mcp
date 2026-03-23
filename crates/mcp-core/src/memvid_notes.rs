@@ -1154,10 +1154,18 @@ pub fn warmup_model() -> Result<()> {
     let rt = tokio::runtime::Runtime::new()
         .map_err(|e| anyhow!("Failed to create tokio runtime: {}", e))?;
     rt.block_on(async {
-        // Creating an encoder triggers the HuggingFace Hub model download
-        let _encoder = MemvidEncoder::new(Some(config))
+        // Create encoder — this downloads the model if needed
+        let mut encoder = MemvidEncoder::new(Some(config))
             .await
-            .map_err(|e| anyhow!("Failed to initialize BERT model: {}", e))?;
+            .map_err(|e| anyhow!("Failed to initialize encoder: {}", e))?;
+
+        // Verify the model works by encoding a test string
+        encoder
+            .add_text("warmup test", 100, 0)
+            .await
+            .map_err(|e| anyhow!("BERT model verification failed: {}", e))?;
+
+        tracing::info!("BERT model loaded and verified");
         Ok(())
     })
 }
