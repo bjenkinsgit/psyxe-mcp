@@ -16,32 +16,28 @@ All tools run locally via macOS-native APIs (AppleScript, EventKit, Contacts fra
 
 ## Install
 
-### Prerequisites
-
-- macOS 12+ (Monterey or later)
-- [Rust toolchain](https://rustup.rs/) (1.85+)
-- FFmpeg and pkg-config (`brew install ffmpeg pkg-config`) — required for semantic search
-
 ### Build from Source
 
 ```bash
-# Install dependencies (if not already present)
-brew install ffmpeg pkg-config
-
 git clone https://github.com/bjenkinsgit/psyxe-mcp.git
 cd psyxe-mcp
-
-# Build everything: Rust binary, Swift helpers, BERT model download
 ./build.sh
 ```
 
-This builds the MCP server, compiles the Swift helpers, copies them next to the binary, and pre-downloads the BERT model for semantic search.
+The build script handles everything automatically:
+- Installs Homebrew, Rust, FFmpeg, and pkg-config if missing
+- Builds the MCP server binary (Rust)
+- Builds Swift helpers for Reminders and Contacts
+- Copies helpers next to the binary
+- Pre-downloads the BERT model (~90MB) so first search is instant
 
-Build without semantic search (no FFmpeg/BERT needed):
+Build without semantic search (skips FFmpeg and BERT):
 
 ```bash
 ./build.sh --no-memvid
 ```
+
+**Requirements:** macOS 12+ (Monterey or later). Xcode Command Line Tools will be prompted if not installed.
 
 The binary and helpers are in `target/release/`. Use the full path when configuring your MCP client.
 

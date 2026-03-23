@@ -27,36 +27,46 @@ START=$SECONDS
 
 # ── Prerequisites ───────────────────────────────────────────────────────────
 
-bold "Checking prerequisites"
+bold "Checking and installing prerequisites"
 
+# Homebrew
+if ! command -v brew &>/dev/null; then
+    bold "Installing Homebrew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # Add brew to PATH for this session (Apple Silicon default location)
+    eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv 2>/dev/null)"
+fi
+green "Homebrew: available"
+
+# Rust toolchain
 if ! command -v cargo &>/dev/null; then
-    red "Rust toolchain not found"
-    echo "  Install: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
-    exit 1
+    bold "Installing Rust toolchain"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    source "$HOME/.cargo/env"
 fi
 green "Rust: $(rustc --version | awk '{print $2}')"
 
+# Xcode Command Line Tools (provides Swift + system headers)
 if ! command -v swift &>/dev/null; then
-    red "Swift not found (needed for Reminders + Contacts helpers)"
-    echo "  Install: xcode-select --install"
+    bold "Installing Xcode Command Line Tools"
+    xcode-select --install 2>/dev/null || true
+    echo "  Waiting for Xcode CLT install to complete..."
+    echo "  If a dialog appeared, click Install and wait, then re-run ./build.sh"
     exit 1
 fi
 green "Swift: available"
 
+# FFmpeg + pkg-config (for semantic search)
 if [[ "$NO_MEMVID" == false ]]; then
-    if ! command -v ffmpeg &>/dev/null; then
-        red "FFmpeg not found (needed for semantic search)"
-        echo "  Install: brew install ffmpeg pkg-config"
-        echo "  Or build without semantic search: ./build.sh --no-memvid"
-        exit 1
+    BREW_NEEDED=()
+    command -v ffmpeg &>/dev/null || BREW_NEEDED+=(ffmpeg)
+    command -v pkg-config &>/dev/null || BREW_NEEDED+=(pkg-config)
+
+    if [[ ${#BREW_NEEDED[@]} -gt 0 ]]; then
+        bold "Installing ${BREW_NEEDED[*]}"
+        brew install "${BREW_NEEDED[@]}"
     fi
     green "FFmpeg: $(ffmpeg -version 2>&1 | head -1 | awk '{print $3}')"
-
-    if ! command -v pkg-config &>/dev/null; then
-        red "pkg-config not found (needed to locate FFmpeg libraries)"
-        echo "  Install: brew install pkg-config"
-        exit 1
-    fi
     green "pkg-config: available"
 fi
 
