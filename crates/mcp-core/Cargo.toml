@@ -1,0 +1,92 @@
+[package]
+name = "psyxe-mcp-core"
+version = "0.1.0"
+edition = "2021"
+description = "Apple ecosystem tools library — Notes, Reminders, Contacts, Weather, Files"
+license = "Apache-2.0"
+
+[dependencies]
+# Serde for JSON serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# HTTP client for Apple APIs, weather, geocoding, web search
+reqwest = { version = "0.12", features = ["blocking", "json"] }
+
+# Error handling
+anyhow = "1.0"
+
+# Structured logging
+tracing = "0.1"
+
+# Date/time handling (Apple Weather JWT, scheduling)
+chrono = { version = "0.4", features = ["serde"] }
+
+# JWT for Apple WeatherKit / Maps authentication
+jsonwebtoken = "9.3"
+base64 = "0.22"
+
+# URL encoding for API queries
+urlencoding = "2.1"
+
+# URL parsing for HTTP proxy domain validation
+url = "2.5"
+
+# Platform-specific directories (cache, config)
+dirs = "5.0"
+
+# Gzip decompression (Apple Notes protobuf extraction)
+flate2 = "1.0"
+
+# Markdown to HTML conversion (PDF pipeline)
+pulldown-cmark = "0.12"
+
+# Unified diff parsing/application for file operations
+diffy = "0.4"
+
+# macOS Keychain for access control storage
+keyring = { version = "3", features = ["apple-native"] }
+
+# Magic-byte file type detection for image validation
+infer = "0.16"
+
+# Image decode/re-encode for security pipeline
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "webp", "bmp"] }
+
+# SHA-256 hashing for image security pipeline
+sha2 = "0.10"
+
+# JSON Schema validation (tool argument validation)
+jsonschema = "0.26"
+
+# TOML config parsing (memvid config)
+toml = "0.8"
+
+# Regex for template substitution in tool URLs
+regex = "1.10"
+
+# SQLite for read-only access to NoteStore.sqlite (Apple Notes)
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+# Async runtime for memvid operations
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+
+# Memvid - semantic search with QR-encoded video storage (optional)
+memvid-rs = { git = "https://github.com/bjenkinsgit/memvid-rs", branch = "main", optional = true }
+
+# FFmpeg bindings for log level control (optional, with memvid)
+ffmpeg-next = { version = "8.0", optional = true }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+# In-process EventKit FFI for Reminders access in sandboxed builds
+objc2 = "0.6"
+objc2-foundation = "0.3"
+objc2-event-kit = "0.3"
+block2 = "0.6"
+
+[dev-dependencies]
+tempfile = "3.24"
+
+[features]
+default = ["memvid"]
+memvid = ["memvid-rs", "ffmpeg-next"]

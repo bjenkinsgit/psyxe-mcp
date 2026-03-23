@@ -1,0 +1,1415 @@
+{
+  "tools": [
+    {
+      "name": "get_weather",
+      "description": "Get current weather conditions, temperature, forecasts, and severe weather assessments for any location. This is the primary weather tool — always use this instead of fetching weather websites.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "City name (e.g., NYC, London, Tokyo)"
+          },
+          "date": {
+            "type": "string",
+            "description": "Start date in YYYY-MM-DD format (optional, defaults to today)"
+          },
+          "date_end": {
+            "type": "string",
+            "description": "End date in YYYY-MM-DD format for date ranges (optional)"
+          },
+          "weather_query": {
+            "type": "string",
+            "enum": ["current", "forecast", "assessment"],
+            "description": "Type of weather query: current (single day), forecast (multi-day), assessment (bad weather check)"
+          }
+        },
+        "required": ["location"]
+      }
+    },
+    {
+      "name": "search_nearby",
+      "description": "Search for nearby places and points of interest (restaurants, cafes, gas stations, parks, etc.) near a given location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "What to search for (e.g., 'coffee shops', 'gas stations', 'Italian restaurants')"
+          },
+          "location": {
+            "type": "string",
+            "description": "City or address to search near (e.g., 'NYC', 'downtown Seattle')"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Max results to return (default: 5, max: 10)"
+          }
+        },
+        "required": ["query", "location"]
+      }
+    },
+    {
+      "name": "echo_test",
+      "description": "Test tool that echoes arguments via httpbin (for testing)",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Message to echo"
+          }
+        },
+        "required": ["message"]
+      },
+      "endpoint": {
+        "url": "https://httpbin.org/get",
+        "method": "GET",
+        "query": {
+          "message": "{{message}}"
+        },
+        "response_path": "$.args.message",
+        "timeout_secs": 10
+      }
+    },
+    {
+      "name": "post_test",
+      "description": "Test POST endpoint via httpbin",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "required": ["title"]
+      },
+      "endpoint": {
+        "url": "https://httpbin.org/post",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "title": "{{title}}",
+          "content": "{{content}}"
+        },
+        "response_path": "$.json.title",
+        "timeout_secs": 10
+      }
+    },
+    {
+      "name": "search_notes",
+      "description": "Search Apple Notes by query. Returns matching notes with title, folder, and snippet.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search term to find in note titles and bodies"
+          },
+          "folder": {
+            "type": "string",
+            "description": "Optional: limit search to specific folder name"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "list_notes",
+      "description": "List all Apple Notes, optionally filtered by folder",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "folder": {
+            "type": "string",
+            "description": "Optional: folder name to list notes from"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "get_note",
+      "description": "Get the full content of a specific Apple Note by ID",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique note ID (from search_notes or list_notes)"
+          }
+        },
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "open_note",
+      "description": "Open an Apple Note in the Notes app by ID. Use this when the user wants to view or edit a note directly.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique note ID (from search_notes or list_notes)"
+          }
+        },
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "notes_index",
+      "description": "Build or check the Apple Notes tag index. Use action='build' to rebuild, action='check' to verify if index is current.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["build", "check"],
+            "description": "Action to perform: 'build' rebuilds the index, 'check' verifies if it's current"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "notes_tags",
+      "description": "List all hashtags found in Apple Notes, sorted by frequency",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      }
+    },
+    {
+      "name": "notes_search_by_tag",
+      "description": "Find all Apple Notes with a specific hashtag",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "description": "The hashtag to search for (with or without # prefix)"
+          }
+        },
+        "required": ["tag"]
+      }
+    },
+    {
+      "name": "list_reminder_lists",
+      "description": "List all Reminder lists in Apple Reminders, showing list name, ID, and reminder count",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      }
+    },
+    {
+      "name": "search_reminders",
+      "description": "Search reminders by keyword across all lists or within a specific list. Returns matching reminders with name, list, due date, completion status, priority, and attachments.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search keyword to match in reminder names"
+          },
+          "list": {
+            "type": "string",
+            "description": "Optional list name to search within"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "list_reminders",
+      "description": "List all reminders in a specific list, including full notes text and attachments. Use this to inspect note contents for filtering or batch edits. By default shows only incomplete reminders.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "string",
+            "description": "Name of the reminder list"
+          },
+          "show_completed": {
+            "type": "boolean",
+            "description": "If true, also show completed reminders (default: false)"
+          }
+        },
+        "required": ["list"]
+      }
+    },
+    {
+      "name": "get_reminder",
+      "description": "Get full details of a specific reminder by name, including notes, dates, priority, and attachments (iCloud links, URLs, files shared via Share sheet)",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the reminder to retrieve"
+          },
+          "list": {
+            "type": "string",
+            "description": "CRITICAL: ALWAYS provide the list name. Without it the wrong reminder may be returned if multiple lists contain reminders with the same name."
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    {
+      "name": "create_reminder",
+      "description": "Create a single new reminder in Apple Reminders. Use this for ONE reminder; for multiple reminders use create_reminders_batch instead.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the reminder"
+          },
+          "list": {
+            "type": "string",
+            "description": "List to create the reminder in (default: Reminders default list)"
+          },
+          "due_date": {
+            "type": "string",
+            "description": "Due date in YYYY-MM-DD format, or YYYY-MM-DD HH:MM to set a specific time"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes for the reminder"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority level: 'high', 'medium', 'low', or 'none' (default: none)"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL to attach to the reminder (note: Apple bug may prevent persistence)"
+          },
+          "location": {
+            "type": "string",
+            "description": "Plain text location for the reminder"
+          },
+          "start_date": {
+            "type": "string",
+            "description": "Start date in YYYY-MM-DD or YYYY-MM-DD HH:MM format"
+          },
+          "location_alarm": {
+            "type": "object",
+            "description": "Set a location-based alarm (geofence). Pass null to remove.",
+            "properties": {
+              "latitude": { "type": "number", "description": "Latitude" },
+              "longitude": { "type": "number", "description": "Longitude" },
+              "title": { "type": "string", "description": "Location name" },
+              "radius": { "type": "number", "description": "Geofence radius in meters (default: 100)" },
+              "proximity": { "type": "string", "enum": ["enter", "leave"], "description": "Trigger on enter or leave (default: enter)" }
+            },
+            "required": ["latitude", "longitude"]
+          },
+          "time_alarm": {
+            "type": "object",
+            "description": "Set a time-based alarm. Pass null to remove.",
+            "properties": {
+              "offset_minutes": { "type": "integer", "description": "Minutes before due date to trigger alarm" }
+            },
+            "required": ["offset_minutes"]
+          },
+          "recurrence": {
+            "type": "object",
+            "description": "Set a recurrence rule. Pass null to remove.",
+            "properties": {
+              "frequency": { "type": "string", "enum": ["daily", "weekly", "monthly", "yearly"], "description": "Recurrence frequency" },
+              "interval": { "type": "integer", "description": "Repeat every N periods (default: 1)" },
+              "end_date": { "type": "string", "description": "End date in YYYY-MM-DD format" },
+              "occurrence_count": { "type": "integer", "description": "Number of occurrences before stopping" }
+            },
+            "required": ["frequency"]
+          }
+        },
+        "required": ["title"]
+      }
+    },
+    {
+      "name": "create_reminders_batch",
+      "description": "Create multiple reminders in a list in one batch operation. Use when the user says 'all', 'every', or 'many' reminders need creating. ALWAYS prefer this over calling create_reminder in a loop.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "string",
+            "description": "Name of the reminder list to add items to (must already exist)"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of reminder items to create",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Title of the reminder"
+                },
+                "notes": {
+                  "type": "string",
+                  "description": "Optional notes/description for the reminder"
+                },
+                "due_date": {
+                  "type": "string",
+                  "description": "Due date in YYYY-MM-DD or YYYY-MM-DD HH:MM format"
+                },
+                "priority": {
+                  "type": "string",
+                  "description": "Priority: 'high', 'medium', 'low', or 'none'"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "URL to attach"
+                },
+                "location": {
+                  "type": "string",
+                  "description": "Plain text location"
+                },
+                "start_date": {
+                  "type": "string",
+                  "description": "Start date in YYYY-MM-DD or YYYY-MM-DD HH:MM format"
+                },
+                "location_alarm": {
+                  "type": "object",
+                  "properties": {
+                    "latitude": { "type": "number" },
+                    "longitude": { "type": "number" },
+                    "title": { "type": "string" },
+                    "radius": { "type": "number" },
+                    "proximity": { "type": "string", "enum": ["enter", "leave"] }
+                  },
+                  "required": ["latitude", "longitude"]
+                },
+                "time_alarm": {
+                  "type": "object",
+                  "properties": {
+                    "offset_minutes": { "type": "integer" }
+                  },
+                  "required": ["offset_minutes"]
+                },
+                "recurrence": {
+                  "type": "object",
+                  "properties": {
+                    "frequency": { "type": "string", "enum": ["daily", "weekly", "monthly", "yearly"] },
+                    "interval": { "type": "integer" },
+                    "end_date": { "type": "string" },
+                    "occurrence_count": { "type": "integer" }
+                  },
+                  "required": ["frequency"]
+                }
+              },
+              "required": ["title"]
+            }
+          }
+        },
+        "required": ["list", "items"]
+      }
+    },
+    {
+      "name": "complete_reminder",
+      "description": "Mark a reminder as completed or incomplete",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the reminder"
+          },
+          "list": {
+            "type": "string",
+            "description": "CRITICAL: ALWAYS provide the list name. Without it the wrong reminder may be completed if multiple lists contain reminders with the same name."
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Set to true to complete, false to mark incomplete (default: true)"
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    {
+      "name": "delete_reminder",
+      "description": "Delete a reminder by name",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the reminder to delete"
+          },
+          "list": {
+            "type": "string",
+            "description": "CRITICAL: ALWAYS provide the list name. Without it the wrong reminder may be deleted if multiple lists contain reminders with the same name."
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    {
+      "name": "open_reminders",
+      "description": "Open Apple Reminders app, optionally showing a specific list",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "string",
+            "description": "Optional list name to show"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "create_reminder_list",
+      "description": "Create a new reminder list",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name for the new reminder list"
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    {
+      "name": "edit_reminder",
+      "description": "Edit a single reminder's title, due date, notes, priority, URL, location, alarms, recurrence, or move it to a different list. Only include fields you want to change — omitted fields are left unchanged. Do NOT echo back fields from get_reminder unless you intend to modify them. Use this for ONE specific reminder; for multiple reminders use edit_reminders_batch instead. IMPORTANT: Do NOT modify the notes field unless the user explicitly asks you to. The notes field often contains task instructions that must be preserved.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Current name of the reminder to edit"
+          },
+          "list": {
+            "type": "string",
+            "description": "CRITICAL: ALWAYS provide the list name. Without it the wrong reminder may be edited if multiple lists contain reminders with the same name. You MUST include this field on every call."
+          },
+          "title": {
+            "type": "string",
+            "description": "New title"
+          },
+          "due_date": {
+            "type": "string",
+            "description": "New due date (YYYY-MM-DD or YYYY-MM-DD HH:MM), or empty string to clear"
+          },
+          "notes": {
+            "type": "string",
+            "description": "New notes text"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["high", "medium", "low", "none"],
+            "description": "New priority level"
+          },
+          "new_list": {
+            "type": "string",
+            "description": "Move reminder to this list"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL to attach (empty string to clear)"
+          },
+          "location": {
+            "type": "string",
+            "description": "Plain text location (empty string to clear)"
+          },
+          "start_date": {
+            "type": "string",
+            "description": "Start date in YYYY-MM-DD or YYYY-MM-DD HH:MM format (empty string to clear)"
+          },
+          "location_alarm": {
+            "type": "object",
+            "description": "Set a location-based alarm (geofence). Pass null to remove.",
+            "properties": {
+              "latitude": { "type": "number", "description": "Latitude" },
+              "longitude": { "type": "number", "description": "Longitude" },
+              "title": { "type": "string", "description": "Location name" },
+              "radius": { "type": "number", "description": "Geofence radius in meters (default: 100)" },
+              "proximity": { "type": "string", "enum": ["enter", "leave"], "description": "Trigger on enter or leave (default: enter)" }
+            },
+            "required": ["latitude", "longitude"]
+          },
+          "time_alarm": {
+            "type": "object",
+            "description": "Set a time-based alarm. Pass null to remove.",
+            "properties": {
+              "offset_minutes": { "type": "integer", "description": "Minutes before due date to trigger alarm" }
+            },
+            "required": ["offset_minutes"]
+          },
+          "recurrence": {
+            "type": "object",
+            "description": "Set a recurrence rule. Pass null to remove.",
+            "properties": {
+              "frequency": { "type": "string", "enum": ["daily", "weekly", "monthly", "yearly"], "description": "Recurrence frequency" },
+              "interval": { "type": "integer", "description": "Repeat every N periods (default: 1)" },
+              "end_date": { "type": "string", "description": "End date in YYYY-MM-DD format" },
+              "occurrence_count": { "type": "integer", "description": "Number of occurrences before stopping" }
+            },
+            "required": ["frequency"]
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    {
+      "name": "edit_reminders_batch",
+      "description": "Edit multiple reminders in a list in one batch operation. Use when the user says 'all', 'every', or 'many' reminders need changes. ALWAYS prefer this over calling edit_reminder in a loop. For each item, only include fields you want to change — omitted fields are left unchanged. Do NOT echo back fields from list_reminders or get_reminder unless you intend to modify them. IMPORTANT: Do NOT modify the notes field unless the user explicitly asks you to. The notes field often contains task instructions that must be preserved.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "string",
+            "description": "Reminder list containing the reminders"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Current name of the reminder"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "New title"
+                },
+                "due_date": {
+                  "type": "string",
+                  "description": "New due date (YYYY-MM-DD or YYYY-MM-DD HH:MM)"
+                },
+                "notes": {
+                  "type": "string",
+                  "description": "New notes"
+                },
+                "priority": {
+                  "type": "string",
+                  "enum": ["high", "medium", "low", "none"],
+                  "description": "New priority level"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "URL to attach"
+                },
+                "location": {
+                  "type": "string",
+                  "description": "Plain text location"
+                },
+                "start_date": {
+                  "type": "string",
+                  "description": "Start date in YYYY-MM-DD or YYYY-MM-DD HH:MM format"
+                },
+                "location_alarm": {
+                  "type": "object",
+                  "properties": {
+                    "latitude": { "type": "number" },
+                    "longitude": { "type": "number" },
+                    "title": { "type": "string" },
+                    "radius": { "type": "number" },
+                    "proximity": { "type": "string", "enum": ["enter", "leave"] }
+                  },
+                  "required": ["latitude", "longitude"]
+                },
+                "time_alarm": {
+                  "type": "object",
+                  "properties": {
+                    "offset_minutes": { "type": "integer" }
+                  },
+                  "required": ["offset_minutes"]
+                },
+                "recurrence": {
+                  "type": "object",
+                  "properties": {
+                    "frequency": { "type": "string", "enum": ["daily", "weekly", "monthly", "yearly"] },
+                    "interval": { "type": "integer" },
+                    "end_date": { "type": "string" },
+                    "occurrence_count": { "type": "integer" }
+                  },
+                  "required": ["frequency"]
+                }
+              },
+              "required": ["name"]
+            }
+          }
+        },
+        "required": ["list", "items"]
+      }
+    },
+    {
+      "name": "delete_reminder_list",
+      "description": "Delete a reminder list and all its reminders",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the reminder list to delete"
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    {
+      "name": "list_contact_groups",
+      "description": "List all contact containers (iCloud, Google, Exchange, etc.) and groups with contact counts. Use this to discover available contact sources before searching or listing contacts.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      }
+    },
+    {
+      "name": "search_contacts",
+      "description": "Search contacts by name, email address, phone number, or organization. Returns matching contacts with name, organization, phone, and email.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search term to match against contact name, email, phone, or organization"
+          },
+          "container": {
+            "type": "string",
+            "description": "Optional container name to search within (e.g. 'iCloud', 'Google')"
+          },
+          "group": {
+            "type": "string",
+            "description": "Optional group name to search within"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "list_contacts",
+      "description": "List contacts in a specific container or group. Provide either a container name (e.g. 'iCloud') or a group name to scope the listing.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "container": {
+            "type": "string",
+            "description": "Container name to list contacts from (e.g. 'iCloud', 'Google')"
+          },
+          "group": {
+            "type": "string",
+            "description": "Group name to list contacts from"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "get_contact",
+      "description": "Get full details for a specific contact including all phone numbers, email addresses, postal addresses, birthday, notes, and social profiles. Look up by contact ID (from search/list results) or by name.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Contact identifier (from search or list results)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Contact name to look up (use id when available for precision)"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "create_contact",
+      "description": "Create a new contact in the address book. Include ALL available information: name, organization, phone(s), email(s), address(es), URLs, and notes. For businesses/companies/organizations, leave given_name and family_name EMPTY and put the full name in the organization field only (e.g. organization='Bombay Bistro'). For people, use given_name and family_name normally. Use the structured addresses array for postal addresses rather than putting them in the note field. For URLs, use the label 'home page' for the primary website. Specify a container or group to control where the contact is saved.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "given_name": {
+            "type": "string",
+            "description": "First/given name. Leave EMPTY for businesses/companies — use the organization field instead"
+          },
+          "middle_name": {
+            "type": "string",
+            "description": "Middle name. For Spanish names (e.g. 'Juan García López Martínez'), use maternal/paternal surnames here"
+          },
+          "family_name": {
+            "type": "string",
+            "description": "Last/family name. Leave EMPTY for businesses/companies"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "Nickname or preferred name"
+          },
+          "organization": {
+            "type": "string",
+            "description": "Company or organization name. For business contacts, this is the display name (e.g. 'Bombay Bistro') — do NOT also put the name in given_name/family_name"
+          },
+          "job_title": {
+            "type": "string",
+            "description": "Job title"
+          },
+          "department": {
+            "type": "string",
+            "description": "Department name"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Primary phone number (for a single number; use 'phones' array for multiple)"
+          },
+          "phones": {
+            "type": "array",
+            "description": "Multiple phone numbers with labels",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string", "description": "Label: 'main', 'home', 'work', 'mobile', 'iphone'" },
+                "value": { "type": "string", "description": "Phone number" }
+              },
+              "required": ["value"]
+            }
+          },
+          "email": {
+            "type": "string",
+            "description": "Primary email address (for a single address; use 'emails' array for multiple)"
+          },
+          "emails": {
+            "type": "array",
+            "description": "Multiple email addresses with labels",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string", "description": "Label: 'home', 'work', 'school'" },
+                "value": { "type": "string", "description": "Email address" }
+              },
+              "required": ["value"]
+            }
+          },
+          "addresses": {
+            "type": "array",
+            "description": "Postal addresses",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string", "description": "Label: 'home', 'work'" },
+                "street": { "type": "string" },
+                "city": { "type": "string" },
+                "state": { "type": "string" },
+                "postal_code": { "type": "string" },
+                "country": { "type": "string" }
+              }
+            }
+          },
+          "urls": {
+            "type": "array",
+            "description": "URL addresses. Use 'home page' as the label for the primary website",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string", "description": "Label: 'home page' (primary website), 'home', 'work'" },
+                "value": { "type": "string", "description": "URL" }
+              },
+              "required": ["value"]
+            }
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Birthday in YYYY-MM-DD format (or MM-DD if year unknown)"
+          },
+          "instant_messages": {
+            "type": "array",
+            "description": "Instant message accounts",
+            "items": {
+              "type": "object",
+              "properties": {
+                "service": { "type": "string", "description": "Service name: 'Skype', 'MSN', 'Jabber', 'WhatsApp', 'Telegram', 'Signal', etc." },
+                "username": { "type": "string", "description": "Username or handle on the service" },
+                "label": { "type": "string", "description": "Label: 'home', 'work'" }
+              },
+              "required": ["service", "username"]
+            }
+          },
+          "image_base64": {
+            "type": "string",
+            "description": "Profile photo as base64-encoded image data (JPEG or PNG)"
+          },
+          "image_path": {
+            "type": "string",
+            "description": "Path to an image file to use as the contact photo"
+          },
+          "note": {
+            "type": "string",
+            "description": "Notes about the contact"
+          },
+          "container": {
+            "type": "string",
+            "description": "Container to create the contact in (e.g. 'iCloud')"
+          },
+          "group": {
+            "type": "string",
+            "description": "Group to add the contact to"
+          }
+        },
+        "required": ["given_name"]
+      }
+    },
+    {
+      "name": "edit_contact",
+      "description": "Edit an existing contact's fields. Use the contact ID from search or list results. Fields not specified are left unchanged. Use add_phone/add_email to append without replacing; use phones/emails/addresses/urls/instant_messages arrays to replace all values.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Contact identifier (from search or list results)"
+          },
+          "given_name": {
+            "type": "string",
+            "description": "New first/given name"
+          },
+          "middle_name": {
+            "type": "string",
+            "description": "New middle name"
+          },
+          "family_name": {
+            "type": "string",
+            "description": "New last/family name"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "New nickname"
+          },
+          "organization": {
+            "type": "string",
+            "description": "New organization name"
+          },
+          "job_title": {
+            "type": "string",
+            "description": "New job title"
+          },
+          "department": {
+            "type": "string",
+            "description": "New department"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Birthday in YYYY-MM-DD or MM-DD format (empty string clears)"
+          },
+          "note": {
+            "type": "string",
+            "description": "New notes"
+          },
+          "image_base64": {
+            "type": "string",
+            "description": "Profile photo as base64-encoded data (empty string clears)"
+          },
+          "image_path": {
+            "type": "string",
+            "description": "Path to image file for contact photo"
+          },
+          "add_phone": {
+            "type": "string",
+            "description": "Phone number to add (appends to existing)"
+          },
+          "add_phone_label": {
+            "type": "string",
+            "description": "Label for added phone: 'main', 'home', 'work', 'mobile', 'iphone'"
+          },
+          "add_email": {
+            "type": "string",
+            "description": "Email address to add (appends to existing)"
+          },
+          "add_email_label": {
+            "type": "string",
+            "description": "Label for added email: 'home', 'work', 'school'"
+          },
+          "phones": {
+            "type": "array",
+            "description": "Replace ALL phone numbers",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string" },
+                "value": { "type": "string" }
+              },
+              "required": ["value"]
+            }
+          },
+          "emails": {
+            "type": "array",
+            "description": "Replace ALL email addresses",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string" },
+                "value": { "type": "string" }
+              },
+              "required": ["value"]
+            }
+          },
+          "addresses": {
+            "type": "array",
+            "description": "Replace ALL postal addresses",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string" },
+                "street": { "type": "string" },
+                "city": { "type": "string" },
+                "state": { "type": "string" },
+                "postal_code": { "type": "string" },
+                "country": { "type": "string" }
+              }
+            }
+          },
+          "urls": {
+            "type": "array",
+            "description": "Replace ALL URLs",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string" },
+                "value": { "type": "string" }
+              },
+              "required": ["value"]
+            }
+          },
+          "instant_messages": {
+            "type": "array",
+            "description": "Replace ALL instant message accounts",
+            "items": {
+              "type": "object",
+              "properties": {
+                "service": { "type": "string" },
+                "username": { "type": "string" },
+                "label": { "type": "string" }
+              },
+              "required": ["service", "username"]
+            }
+          }
+        },
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "delete_contact",
+      "description": "Delete a contact from the address book by ID. This action cannot be undone.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Contact identifier to delete (from search or list results)"
+          }
+        },
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "file_search",
+      "description": "Search the user's local files and Apple Notes. IMPORTANT: You MUST set scope explicitly. When the user mentions 'files', 'folders', or 'documents', use scope='files'. When they mention 'notes', use scope='notes'. Only use scope='all' when they want both. Returns matching documents with title, snippet, source type, and relevance score.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Natural language search query"
+          },
+          "scope": {
+            "type": "string",
+            "enum": ["notes", "files", "all"],
+            "description": "REQUIRED. 'files' = local file folders only, 'notes' = Apple Notes only, 'all' = both. Choose based on what the user is asking to search."
+          },
+          "file_types": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Filter by file type extensions, e.g. ['pdf', 'md', 'txt']. Only applies to file scope."
+          },
+          "date_after": {
+            "type": "string",
+            "description": "Only files modified after this date (YYYY-MM-DD)"
+          },
+          "date_before": {
+            "type": "string",
+            "description": "Only files modified before this date (YYYY-MM-DD)"
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Filter by macOS Finder tags (e.g. ['Important', 'Work']). Only applies to file scope."
+          },
+          "max_num_results": {
+            "type": "integer",
+            "description": "Maximum results to return (default: 10)"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "read_file",
+      "description": "Read the contents of a file from the workspace or granted folders. Returns file content as text. Use to inspect files found by file_search or review workspace files before editing.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File path (relative to workspace, or absolute within a granted folder)"
+          }
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "write_file",
+      "description": "Write text content to a file (.txt, .md, .json, .csv, etc.). Creates the file if it doesn't exist, overwrites if it does. For PDF documents, use create_pdf instead — NOT this tool.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File path relative to workspace (e.g., 'report.txt', 'reports/weather.md')"
+          },
+          "content": {
+            "type": "string",
+            "description": "Text content to write to the file"
+          }
+        },
+        "required": ["path", "content"]
+      }
+    },
+    {
+      "name": "create_pdf",
+      "description": "Create a styled PDF document in the workspace. ALWAYS use this tool (not write_file) for any .pdf output. Accepts markdown (preferred — tables, images, headings all supported), plain text, or raw HTML. Markdown and plain text are automatically styled. Do NOT generate HTML yourself — use markdown instead.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Output path relative to workspace (must end in .pdf, e.g. 'reports/weather.pdf')"
+          },
+          "content": {
+            "type": "string",
+            "description": "Content for the PDF body (markdown preferred, also accepts plain text or raw HTML)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Document title (shown at top for plain text; ignored for HTML content)"
+          }
+        },
+        "required": ["path", "content"]
+      }
+    },
+    {
+      "name": "apply_patch",
+      "description": "Create, modify, or delete files in the workspace using unified diff format. For new files use '--- /dev/null'. For deletion use '+++ /dev/null'. Paths are relative to the workspace directory.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patch": {
+            "type": "string",
+            "description": "Unified diff ('--- a/file\\n+++ b/file' format with @@ hunks)"
+          }
+        },
+        "required": ["patch"]
+      }
+    },
+    {
+      "name": "web_search",
+      "description": "Search the web for current information, articles, and general internet content. Returns titles, URLs, and descriptions. Use the 'sources' parameter to filter results to specific domains instead of making separate searches.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of results to return (default 5, max 20). Omit when using 'sources' — count auto-scales to 5 results per source domain."
+          },
+          "sources": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Only results from these domains are returned (e.g. ['cnn.com', 'reuters.com']). If a source has no results, it is reported in the response. One call is sufficient — do not retry."
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "news_search",
+      "description": "Search for recent news articles. Returns titles, URLs, descriptions, and publication age. Use the 'sources' parameter to filter results to specific outlets instead of making separate searches.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "News search query (must not be empty). Be specific, e.g. 'AI regulation 2026' not just 'news'."
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of results (default 5, max 20). Omit when using 'sources' — count auto-scales to 5 results per source domain."
+          },
+          "freshness": {
+            "type": "string",
+            "description": "Time filter: 'pd' for last 24 hours, 'pw' for last 7 days, 'pm' for last 31 days, 'py' for last year. Omit for no time filter."
+          },
+          "sources": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Only results from these domains are returned (e.g. ['cnn.com', 'reuters.com']). If a source has no results, it is reported in the response. One call is sufficient — do not retry."
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "video_search",
+      "description": "Search for videos across the web. Returns titles, URLs, descriptions, duration, and creator info. Best for tutorials, entertainment, and video content.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Video search query"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of results (default 5, max 20)"
+          },
+          "freshness": {
+            "type": "string",
+            "description": "Time filter: 'pd' for last 24 hours, 'pw' for last 7 days, 'pm' for last 31 days, 'py' for last year. Omit for no time filter."
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "image_search",
+      "description": "Search for images across the web. Returns titles, source URLs, thumbnails, and dimensions. Best for finding visual content, photos, and illustrations.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Image search query"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of results (default 5, max 50)"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "draft_email",
+      "description": "Draft an email",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "Recipient email address"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Email subject"
+          },
+          "body": {
+            "type": "string",
+            "description": "Email body"
+          }
+        },
+        "required": ["to", "subject"]
+      }
+    },
+    {
+      "name": "create_todo",
+      "description": "Create a todo/reminder item",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Todo title"
+          },
+          "due": {
+            "type": "string",
+            "description": "Due date in YYYY-MM-DD format"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority level (low, normal, high)"
+          }
+        },
+        "required": ["title"]
+      }
+    },
+    {
+      "name": "image_generation",
+      "description": "Generate an image from a text description using AI. Returns a generated image.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "Text description of the image to generate"
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": ["1:1", "3:2", "2:3", "16:9", "9:16", "4:3", "3:4"],
+            "description": "Aspect ratio (default 1:1)"
+          },
+          "image_size": {
+            "type": "string",
+            "enum": ["small", "medium", "large", "1K", "2K", "4K"],
+            "description": "Output resolution: small/1K (default), medium/2K, or large/4K"
+          }
+        },
+        "required": ["prompt"]
+      }
+    },
+    {
+      "name": "youtube_transcript",
+      "description": "Fetch YouTube video transcript/captions given a video ID. Returns timestamped segments and plain text. Requires yt-dlp to be installed.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "The YouTube video ID (the part after v= in the URL, e.g., 'dQw4w9WgXcQ')"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language code for captions (default: 'en')"
+          }
+        },
+        "required": ["video_id"]
+      }
+    },
+    {
+      "name": "code_interpreter",
+      "description": "Execute Python code in a sandboxed environment for math, data analysis, charts, CSV processing, and general computation. No network access.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Python 3 code to execute"
+          },
+          "timeout_secs": {
+            "type": "integer",
+            "description": "Max execution time in seconds (default: 30, max: 120)"
+          }
+        },
+        "required": ["code"]
+      }
+    },
+    {
+      "name": "input_image",
+      "description": "Describe what is in an image. Returns a brief, natural-language description. Accepts a local file path or URL.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "image_source": {
+            "type": "string",
+            "description": "Path to a local image file or an image URL"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "What to describe about the image"
+          }
+        },
+        "required": ["image_source"]
+      }
+    },
+    {
+      "name": "analyze_image",
+      "description": "Detailed structured analysis of an image with composition, subject, context, and visual details in tabular/bulleted format. Accepts a local file path or URL.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "image_source": {
+            "type": "string",
+            "description": "Path to a local image file or an image URL"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Specific analysis focus or question about the image"
+          }
+        },
+        "required": ["image_source"]
+      }
+    },
+    {
+      "name": "extract_text",
+      "description": "Extract text (OCR) from an image — screenshots, documents, signs, handwriting. Returns all visible text preserving layout.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "image_source": {
+            "type": "string",
+            "description": "Path to a local image file or an image URL"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Specific extraction focus (e.g., 'extract only the headline')"
+          }
+        },
+        "required": ["image_source"]
+      }
+    },
+    {
+      "name": "detect_objects",
+      "description": "Detect objects in an image and return their labels and bounding box coordinates as JSON. Coordinates use [y_min, x_min, y_max, x_max] normalized to 0-1000 scale.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "image_source": {
+            "type": "string",
+            "description": "Path to a local image file or an image URL"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "What to detect (e.g., 'find all cars', 'detect faces')"
+          }
+        },
+        "required": ["image_source"]
+      }
+    },
+    {
+      "name": "compare_images",
+      "description": "Compare two or more images side by side. Describes similarities, differences, and changes between them. Useful for before/after comparisons.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "image_sources": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Two or more image paths or URLs to compare",
+            "minItems": 2
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Specific comparison focus (e.g., 'what changed between these screenshots?')"
+          }
+        },
+        "required": ["image_sources"]
+      }
+    }
+  ]
+}
