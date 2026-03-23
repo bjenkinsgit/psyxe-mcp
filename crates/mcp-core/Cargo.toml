@@ -75,7 +75,7 @@ tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 memvid-rs = { git = "https://github.com/bjenkinsgit/memvid-rs", branch = "main", optional = true }
 
 # FFmpeg bindings for log level control (optional, with memvid)
-ffmpeg-next = { version = "8.0", optional = true }
+ffmpeg-next = { version = "8.1", optional = true }
 
 [target.'cfg(target_os = "macos")'.dependencies]
 # In-process EventKit FFI for Reminders access in sandboxed builds

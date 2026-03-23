@@ -153,10 +153,11 @@ pub fn build_memvid_rs_config() -> Config {
     config.chunking.max_chunk_size = config.chunking.chunk_size;
 
     // Auto-detect bundled ffmpeg binary when running from app bundle
-    if let Some(path) = find_bundled_ffmpeg() {
-        tracing::info!(path = %path.display(), "Found bundled ffmpeg binary");
-        // Set FFMPEG_PATH env so memvid-rs can find it
-        std::env::set_var("FFMPEG_PATH", &path);
+    if config.video.ffmpeg_path.is_none() {
+        if let Some(path) = find_bundled_ffmpeg() {
+            tracing::info!(path = %path.display(), "Using bundled ffmpeg binary");
+            config.video.ffmpeg_path = Some(path.to_string_lossy().into_owned());
+        }
     }
 
     // Remote embedding API (when embedding_provider = "remote")

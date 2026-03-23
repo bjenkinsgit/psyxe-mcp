@@ -4,8 +4,3 @@
 *.swo
 .env
 .bwj_env
-
-# Swift build artifacts
-swift/*/.build/
-swift/*/Package.resolved
-
