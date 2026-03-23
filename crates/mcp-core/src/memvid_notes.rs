@@ -721,8 +721,9 @@ pub async fn build_index() -> Result<IndexStats> {
                 });
             }
 
-            // Manual chunking with short prefix
-            let body = &content.body;
+            // Prepend title to body so it gets embedded (enables matching on title terms)
+            let text = format!("{}\n{}", note.title, content.body);
+            let body = &text;
             let prefix = format!("N:{}\n", note_idx);
             let prefix_len = prefix.len();
             let effective_chunk_size = chunk_size.saturating_sub(prefix_len);
