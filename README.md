@@ -111,6 +111,19 @@ Edit `~/.codeium/windsurf/mcp_config.json`:
 }
 ```
 
+### OpenAI Codex CLI
+
+```bash
+codex mcp add psyxe --command /absolute/path/to/psyxe-mcp
+```
+
+Or edit `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.psyxe]
+command = "/absolute/path/to/psyxe-mcp"
+```
+
 Replace `/absolute/path/to/psyxe-mcp` with the actual path to the binary, e.g., `/Users/yourname/src/psyxe-mcp/target/release/psyxe-mcp`.
 
 ## Access Control
