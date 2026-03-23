@@ -5,11 +5,17 @@ search in action. Each note is designed so that **the most interesting search
 queries use completely different words than the note itself** — demonstrating
 that semantic search understands *meaning*, not just keywords.
 
-## How to Use
+## Quick Setup
 
-1. Create each note below in Apple Notes (title = heading, body = text)
-2. Ask your AI assistant: "rebuild the notes index"
-3. Try the demo queries at the bottom
+```bash
+# Load all 10 notes into Apple Notes automatically
+./examples/load-sample-notes.sh
+
+# Then ask your AI assistant: "rebuild the notes index"
+# And try the demo queries at the bottom
+```
+
+Or create each note manually in Apple Notes (title = heading, body = text).
 
 ---
 

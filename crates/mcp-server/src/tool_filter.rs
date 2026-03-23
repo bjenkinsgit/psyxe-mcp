@@ -14,6 +14,7 @@ const ALLOWED_TOOLS: &[&str] = &[
     "list_notes",
     "get_note",
     "open_note",
+    "create_note",
     "notes_tags",
     "notes_search_by_tag",
     "notes_index",

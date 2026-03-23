@@ -162,6 +162,28 @@
       }
     },
     {
+      "name": "create_note",
+      "description": "Create a new Apple Note. Supports plain text or HTML body content.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the note"
+          },
+          "body": {
+            "type": "string",
+            "description": "Body content of the note (plain text or HTML)"
+          },
+          "folder": {
+            "type": "string",
+            "description": "Folder to create the note in (default: 'Notes')"
+          }
+        },
+        "required": ["title"]
+      }
+    },
+    {
       "name": "notes_index",
       "description": "Build or check the Apple Notes tag index. Use action='build' to rebuild, action='check' to verify if index is current.",
       "parameters": {

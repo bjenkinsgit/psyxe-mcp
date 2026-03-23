@@ -136,7 +136,7 @@ pub fn dispatch_tool(tool: &str, args: &Value, executor: Option<&ToolExecutor>) 
 
     // Apple Notes tools
     let notes_tools = [
-        "search_notes", "list_notes", "get_note", "open_note",
+        "search_notes", "list_notes", "get_note", "open_note", "create_note",
         "notes_index", "notes_tags", "notes_search_by_tag",
         "notes_semantic_search", "notes_rebuild_index",
         "notes_index_stats", "notes_smart_search",
@@ -162,6 +162,7 @@ pub fn dispatch_tool(tool: &str, args: &Value, executor: Option<&ToolExecutor>) 
             "notes_rebuild_index" => "rebuild_memvid_index",
             "notes_index_stats" => "memvid_stats",
             "notes_smart_search" => "smart_search",
+            "create_note" => "create",
             _ => unreachable!(),
         };
         return Some(match apple_notes::execute_apple_notes(action, args) {

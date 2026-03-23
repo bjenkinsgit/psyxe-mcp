@@ -595,6 +595,40 @@ pub fn open_note(note_id: &str) -> Result<String> {
     }))?)
 }
 
+/// Create a new note in Apple Notes via AppleScript.
+pub fn create_note(title: &str, body: &str, folder: Option<&str>) -> Result<String> {
+    let mut args = vec![title, body];
+    if let Some(f) = folder {
+        args.push(f);
+    }
+    let output = run_script("notes_create.applescript", &args)?;
+    let output = output.trim();
+
+    if output.starts_with("ERROR:") {
+        return Err(anyhow!("{}", output));
+    }
+
+    // Parse RECORD_START/RECORD_END response
+    let mut id = String::new();
+    let mut result_folder = String::new();
+    for line in output.lines() {
+        let line = line.trim();
+        if let Some(val) = line.strip_prefix("id: ") {
+            id = val.to_string();
+        } else if let Some(val) = line.strip_prefix("folder: ") {
+            result_folder = val.to_string();
+        }
+    }
+
+    Ok(serde_json::to_string_pretty(&json!({
+        "success": true,
+        "id": id,
+        "title": title,
+        "folder": result_folder,
+        "message": format!("Created note '{}' in folder '{}'", title, result_folder)
+    }))?)
+}
+
 // ============================================================================
 // Tag Index Functions
 // ============================================================================
@@ -1113,6 +1147,14 @@ pub fn execute_apple_notes(action: &str, args: &Value) -> Result<String> {
                 .as_str()
                 .ok_or_else(|| anyhow!("Missing required 'query' argument"))?;
             crate::memvid_notes::smart_search(query)
+        }
+        "create" => {
+            let title = args["title"]
+                .as_str()
+                .ok_or_else(|| anyhow!("Missing required 'title' argument"))?;
+            let body = args.get("body").and_then(|v| v.as_str()).unwrap_or("");
+            let folder = args.get("folder").and_then(|v| v.as_str());
+            create_note(title, body, folder)
         }
         _ => Err(anyhow!("Unknown Apple Notes action: {}", action)),
     }

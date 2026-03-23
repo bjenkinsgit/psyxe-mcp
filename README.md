@@ -193,7 +193,18 @@ The first time you (or your AI assistant) run a semantic search, the server will
 
 ### Try It Out
 
-We've included [sample notes](examples/sample-notes.md) designed to showcase semantic search. Copy the 10 notes into Apple Notes, rebuild the index, then try queries like "retirement savings" (finds the Tax Strategy note that never mentions "retirement") or "Italian cooking" (finds the Carbonara recipe that never says "Italian"). See the full list of demo queries in the file.
+We've included [sample notes](examples/sample-notes.md) designed to showcase semantic search:
+
+```bash
+# Load 10 sample notes into Apple Notes
+./examples/load-sample-notes.sh
+
+# Then ask your AI assistant to rebuild the index and try queries like:
+#   "retirement savings"  → finds Tax Strategy (never mentions "retirement")
+#   "Italian cooking"     → finds Carbonara recipe (never says "Italian")
+```
+
+See [examples/sample-notes.md](examples/sample-notes.md) for the full list of demo queries.
 
 ### Without Semantic Search
 
