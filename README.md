@@ -206,6 +206,58 @@ We've included [sample notes](examples/sample-notes.md) designed to showcase sem
 
 See [examples/sample-notes.md](examples/sample-notes.md) for the full list of demo queries.
 
+### Choosing a Different BERT Model
+
+The default model (`sentence-transformers/all-MiniLM-L6-v2`, 384 dimensions) balances speed and quality. You can swap in any HuggingFace BERT-family sentence-transformer model.
+
+**Via environment variable:**
+```bash
+MEMVID_MODEL_NAME=BAAI/bge-small-en-v1.5 target/release/psyxe-mcp warmup
+```
+
+**Via config file** — create `memvid_config.toml` in the repo root or next to the binary:
+```toml
+[ml]
+model_name = "BAAI/bge-small-en-v1.5"
+```
+
+After changing models, rebuild the index (ask your AI assistant or run warmup again).
+
+**Popular alternatives:**
+
+| Model | Dimensions | Trade-off |
+|-------|-----------|-----------|
+| `sentence-transformers/all-MiniLM-L6-v2` | 384 | Default. Fast, good quality |
+| `BAAI/bge-small-en-v1.5` | 384 | Retrieval-optimized, slightly better for search |
+| `sentence-transformers/all-mpnet-base-v2` | 768 | Higher quality, ~2x slower |
+| `BAAI/bge-base-en-v1.5` | 768 | Best retrieval quality, needs query prefix |
+
+For instruction-tuned models (like BGE), add query/document prefixes:
+```toml
+[ml]
+model_name = "BAAI/bge-small-en-v1.5"
+embedding_query_prefix = "Represent this sentence for searching relevant passages: "
+embedding_document_prefix = ""
+```
+
+### Remote Embedding API
+
+Use any OpenAI-compatible embedding endpoint instead of local BERT:
+
+```toml
+[ml]
+embedding_provider = "remote"
+```
+
+Then set the endpoint via environment variables:
+
+```bash
+export EMBEDDING_API_URL="http://localhost:11434/v1/embeddings"  # Ollama
+export EMBEDDING_API_MODEL="nomic-embed-text"
+```
+
+Works with OpenAI, Ollama, vLLM, LM Studio, or any OpenAI-compatible endpoint.
+
 ### Without Semantic Search
 
 Build without memvid to skip the FFmpeg/BERT dependency entirely (no `brew install` needed):
