@@ -191,6 +191,10 @@ The first time you (or your AI assistant) run a semantic search, the server will
 4. A vector index (HNSW) enables instant semantic similarity search
 5. The index auto-detects when notes change and prompts for rebuild
 
+### Try It Out
+
+We've included [sample notes](examples/sample-notes.md) designed to showcase semantic search. Copy the 10 notes into Apple Notes, rebuild the index, then try queries like "retirement savings" (finds the Tax Strategy note that never mentions "retirement") or "Italian cooking" (finds the Carbonara recipe that never says "Italian"). See the full list of demo queries in the file.
+
 ### Without Semantic Search
 
 Build without memvid to skip the FFmpeg/BERT dependency entirely (no `brew install` needed):
