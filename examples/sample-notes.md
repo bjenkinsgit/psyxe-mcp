@@ -125,6 +125,14 @@ savings" would return zero results because the Tax Strategy note never contains
 those words. BERT embeddings understand that 401k, Roth conversion, and loss
 harvesting are *about* retirement savings.
 
+**If a search comes up empty**, try telling your AI assistant to "search
+harder" or "try broader terms." The assistant will often rephrase the query,
+try synonyms, or break it into multiple searches — and find results that the
+first attempt missed. For example, "any notes about my vacation" might return
+nothing, but a follow-up of "search harder" could prompt the assistant to try
+"trip", "travel", "flight", "itinerary" and surface the Barcelona and boat
+trip notes.
+
 **Try a bad query too**: search for something completely unrelated like
 "quantum physics" — you should see low relevance scores across all notes,
 confirming the search isn't just returning random results.
