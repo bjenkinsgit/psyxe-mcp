@@ -31,16 +31,16 @@ brew install ffmpeg pkg-config
 git clone https://github.com/bjenkinsgit/psyxe-mcp.git
 cd psyxe-mcp
 
-# Build the MCP server binary
-cargo build --release
+# Build everything: Rust binary, Swift helpers, BERT model download
+./build.sh
+```
 
-# Build Swift helpers (faster Reminders + Contacts access)
-cd swift/reminders-helper && swift build -c release && cd ../..
-cd swift/contacts-helper && swift build -c release && cd ../..
+This builds the MCP server, compiles the Swift helpers, copies them next to the binary, and pre-downloads the BERT model for semantic search.
 
-# Copy helpers next to the binary so it works from any directory
-cp swift/reminders-helper/.build/release/reminders-helper target/release/
-cp swift/contacts-helper/.build/release/contacts-helper target/release/
+Build without semantic search (no FFmpeg/BERT needed):
+
+```bash
+./build.sh --no-memvid
 ```
 
 The binary and helpers are in `target/release/`. Use the full path when configuring your MCP client.
