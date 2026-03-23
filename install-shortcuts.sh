@@ -21,12 +21,15 @@ fi
 
 echo "Installing psyXe shortcuts..."
 for sc in "$SHORTCUTS_DIR"/*.shortcut; do
+    # Skip signed variants — we handle them below
+    [[ "$sc" == *.signed.shortcut ]] && continue
+
     name="$(basename "$sc" .shortcut)"
-    # Prefer signed version if available
+
+    # Prefer signed version if available (avoids "untrusted shortcut" warning)
     signed="${sc%.shortcut}.signed.shortcut"
     if [[ -f "$signed" ]]; then
         sc="$signed"
-        name="$(basename "$sc" .signed.shortcut)"
     fi
 
     echo "  Installing: $name"
