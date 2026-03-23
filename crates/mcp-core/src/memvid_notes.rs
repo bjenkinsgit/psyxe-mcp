@@ -1132,6 +1132,28 @@ pub fn rebuild_index_json() -> Result<String> {
     ))
 }
 
+/// Pre-download and cache the BERT model without building an index.
+/// Called by `psyxe-mcp warmup` to avoid a download delay on first search.
+#[cfg(feature = "memvid")]
+pub fn warmup_model() -> Result<()> {
+    let config = build_memvid_rs_config();
+    let rt = tokio::runtime::Runtime::new()
+        .map_err(|e| anyhow!("Failed to create tokio runtime: {}", e))?;
+    rt.block_on(async {
+        // Creating an encoder triggers the HuggingFace Hub model download
+        let _encoder = MemvidEncoder::new(Some(config))
+            .await
+            .map_err(|e| anyhow!("Failed to initialize BERT model: {}", e))?;
+        Ok(())
+    })
+}
+
+/// Stub for warmup_model when memvid is disabled
+#[cfg(not(feature = "memvid"))]
+pub fn warmup_model() -> Result<()> {
+    Ok(()) // Nothing to download
+}
+
 /// Get index stats as JSON
 pub fn stats_json() -> Result<String> {
     let stats = get_stats()?;

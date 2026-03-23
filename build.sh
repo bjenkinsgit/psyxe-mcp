@@ -105,19 +105,10 @@ if [[ "$NO_MEMVID" == false ]]; then
     echo "  Model: sentence-transformers/all-MiniLM-L6-v2 (~90MB)"
     echo "  This avoids a delay on the first semantic search."
 
-    # The model is downloaded by HuggingFace Hub to ~/.cache/huggingface/
-    # We trigger the download by running a quick index stats check.
-    # If no notes index exists yet, it'll just say "no index" and exit.
-    if target/release/psyxe-mcp access list &>/dev/null 2>&1; then
-        # Server binary works — use it to trigger model download
-        # Run notes_index_stats via MCP protocol (initialize + call)
-        INIT='{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"build","version":"0.1"}}}'
-        STATS='{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"notes_index_stats","arguments":{}}}'
-        printf '%s\n%s\n' "$INIT" "$STATS" | timeout 120 target/release/psyxe-mcp 2>/dev/null | tail -1 | head -c 200 > /dev/null 2>&1 || true
-        green "BERT model cached (or already present)"
+    if target/release/psyxe-mcp warmup; then
+        green "BERT model cached"
     else
-        warn "Could not pre-download BERT model (server binary not working)"
-        echo "  The model will download on first semantic search (~90MB)"
+        warn "BERT model download failed — will retry on first semantic search"
     fi
 fi
 

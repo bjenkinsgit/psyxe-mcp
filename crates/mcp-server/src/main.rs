@@ -45,6 +45,8 @@ enum Commands {
         #[command(subcommand)]
         action: AccessAction,
     },
+    /// Download and cache the BERT model for semantic search
+    Warmup,
 }
 
 #[derive(Subcommand)]
@@ -120,19 +122,50 @@ fn load_tools_config() -> Result<ToolsConfig> {
 async fn main() -> Result<()> {
     let cli = Cli::parse();
 
-    // Handle access subcommands (interactive CLI, not MCP mode)
-    if let Some(Commands::Access { action }) = cli.command {
-        return match action {
-            AccessAction::List => access_cli::cmd_list(),
-            AccessAction::Discover { category } => access_cli::cmd_discover(&category),
-            AccessAction::Grant {
-                category,
-                name,
-                writable,
-            } => access_cli::cmd_grant(&category, &name, writable),
-            AccessAction::Revoke { category, name } => access_cli::cmd_revoke(&category, &name),
-            AccessAction::Reset => access_cli::cmd_reset(),
-        };
+    // Handle subcommands (interactive CLI, not MCP mode)
+    match cli.command {
+        Some(Commands::Access { action }) => {
+            return match action {
+                AccessAction::List => access_cli::cmd_list(),
+                AccessAction::Discover { category } => access_cli::cmd_discover(&category),
+                AccessAction::Grant {
+                    category,
+                    name,
+                    writable,
+                } => access_cli::cmd_grant(&category, &name, writable),
+                AccessAction::Revoke { category, name } => access_cli::cmd_revoke(&category, &name),
+                AccessAction::Reset => access_cli::cmd_reset(),
+            };
+        }
+        #[cfg(feature = "memvid")]
+        Some(Commands::Warmup) => {
+            println!("Downloading and caching BERT model for semantic search...");
+            println!("Model: sentence-transformers/all-MiniLM-L6-v2");
+            // Trigger the embedding pipeline which downloads the model on first use
+            let result = tokio::task::spawn_blocking(|| {
+                psyxe_mcp_core::memvid_notes::warmup_model()
+            }).await;
+            match result {
+                Ok(Ok(())) => {
+                    println!("BERT model cached successfully.");
+                    return Ok(());
+                }
+                Ok(Err(e)) => {
+                    eprintln!("Failed to download BERT model: {}", e);
+                    std::process::exit(1);
+                }
+                Err(e) => {
+                    eprintln!("Warmup task failed: {}", e);
+                    std::process::exit(1);
+                }
+            }
+        }
+        #[cfg(not(feature = "memvid"))]
+        Some(Commands::Warmup) => {
+            println!("Semantic search is not enabled (built without memvid feature).");
+            return Ok(());
+        }
+        None => {} // Fall through to MCP server mode
     }
 
     // ── MCP Server Mode ─────────────────────────────────────────────────────
