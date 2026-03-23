@@ -20,11 +20,14 @@ All tools run locally via macOS-native APIs (AppleScript, EventKit, Contacts fra
 
 - macOS 12+ (Monterey or later)
 - [Rust toolchain](https://rustup.rs/) (1.85+)
-- FFmpeg (`brew install ffmpeg`) — required for semantic search
+- FFmpeg and pkg-config (`brew install ffmpeg pkg-config`) — required for semantic search
 
 ### Build from Source
 
 ```bash
+# Install dependencies (if not already present)
+brew install ffmpeg pkg-config
+
 git clone https://github.com/bjenkinsgit/psyxe-mcp.git
 cd psyxe-mcp
 
@@ -181,13 +184,13 @@ The first time you (or your AI assistant) run a semantic search, the server will
 
 ### Without Semantic Search
 
-Build without memvid to skip the BERT/FFmpeg dependency:
+Build without memvid to skip the FFmpeg/BERT dependency entirely (no `brew install` needed):
 
 ```bash
 cargo build --release --no-default-features
 ```
 
-Notes tools still work — they fall back to AppleScript-based text search.
+Notes tools still work — they fall back to AppleScript-based text search. All other tools (Reminders, Contacts, Files) are unaffected.
 
 ## macOS Permissions
 
