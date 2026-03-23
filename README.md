@@ -16,6 +16,15 @@ All tools run locally via macOS-native APIs (AppleScript, EventKit, Contacts fra
 
 ## Install
 
+### Homebrew (recommended)
+
+```bash
+brew tap bjenkinsgit/tap
+brew install psyxe-mcp
+```
+
+This installs everything — binary, Swift helpers, FFmpeg, and the BERT model. No compilation required.
+
 ### Build from Source
 
 ```bash
@@ -53,10 +62,12 @@ This opens each shortcut in Shortcuts.app for you to approve.
 
 ## Configure Your MCP Client
 
+If you installed via Homebrew, the command is just `psyxe-mcp` (it's in your PATH). If you built from source, use the full path: `/Users/yourname/src/psyxe-mcp/target/release/psyxe-mcp`.
+
 ### Claude Code (CLI)
 
 ```bash
-claude mcp add psyxe -- /absolute/path/to/psyxe-mcp
+claude mcp add psyxe -- psyxe-mcp
 ```
 
 Or edit `~/.claude/claude_mcp_config.json`:
@@ -65,7 +76,7 @@ Or edit `~/.claude/claude_mcp_config.json`:
 {
   "mcpServers": {
     "psyxe": {
-      "command": "/absolute/path/to/psyxe-mcp"
+      "command": "psyxe-mcp"
     }
   }
 }
@@ -79,7 +90,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
 {
   "mcpServers": {
     "psyxe": {
-      "command": "/absolute/path/to/psyxe-mcp"
+      "command": "psyxe-mcp"
     }
   }
 }
@@ -92,7 +103,7 @@ Open Settings → MCP Servers → Add new server:
 ```json
 {
   "psyxe": {
-    "command": "/absolute/path/to/psyxe-mcp"
+    "command": "psyxe-mcp"
   }
 }
 ```
@@ -105,7 +116,7 @@ Edit `~/.codeium/windsurf/mcp_config.json`:
 {
   "mcpServers": {
     "psyxe": {
-      "command": "/absolute/path/to/psyxe-mcp"
+      "command": "psyxe-mcp"
     }
   }
 }
@@ -117,10 +128,10 @@ Edit `~/.codex/config.toml`:
 
 ```toml
 [mcp_servers.psyxe]
-command = "/absolute/path/to/psyxe-mcp"
+command = "psyxe-mcp"
 ```
 
-Replace `/absolute/path/to/psyxe-mcp` with the actual path to the binary, e.g., `/Users/yourname/src/psyxe-mcp/target/release/psyxe-mcp`.
+> **Note:** If you built from source instead of using Homebrew, replace `psyxe-mcp` with the full path to the binary (e.g., `/Users/yourname/src/psyxe-mcp/target/release/psyxe-mcp`).
 
 ## Access Control
 
