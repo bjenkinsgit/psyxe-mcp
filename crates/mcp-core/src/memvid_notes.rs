@@ -1082,25 +1082,39 @@ pub async fn search_with_validation(query: &str, top_k: usize) -> Result<SearchR
 /// Synchronous wrapper for build_index
 #[cfg(feature = "memvid")]
 pub fn build_index_sync() -> Result<IndexStats> {
-    let rt = tokio::runtime::Runtime::new()
-        .map_err(|e| anyhow!("Failed to create tokio runtime: {}", e))?;
-    rt.block_on(build_index())
+    // Try to use existing tokio runtime (when called from MCP server's spawn_blocking).
+    // Fall back to creating a new runtime (when called from CLI or standalone).
+    if let Ok(handle) = tokio::runtime::Handle::try_current() {
+        tokio::task::block_in_place(|| handle.block_on(build_index()))
+    } else {
+        let rt = tokio::runtime::Runtime::new()
+            .map_err(|e| anyhow!("Failed to create tokio runtime: {}", e))?;
+        rt.block_on(build_index())
+    }
 }
 
 /// Synchronous wrapper for search
 #[cfg(feature = "memvid")]
 pub fn search_sync(query: &str, top_k: usize) -> Result<Vec<NotesSearchResult>> {
-    let rt = tokio::runtime::Runtime::new()
-        .map_err(|e| anyhow!("Failed to create tokio runtime: {}", e))?;
-    rt.block_on(search(query, top_k))
+    if let Ok(handle) = tokio::runtime::Handle::try_current() {
+        tokio::task::block_in_place(|| handle.block_on(search(query, top_k)))
+    } else {
+        let rt = tokio::runtime::Runtime::new()
+            .map_err(|e| anyhow!("Failed to create tokio runtime: {}", e))?;
+        rt.block_on(search(query, top_k))
+    }
 }
 
 /// Synchronous wrapper for search_with_validation
 #[cfg(feature = "memvid")]
 pub fn search_with_validation_sync(query: &str, top_k: usize) -> Result<SearchResultsWithStaleness> {
-    let rt = tokio::runtime::Runtime::new()
-        .map_err(|e| anyhow!("Failed to create tokio runtime: {}", e))?;
-    rt.block_on(search_with_validation(query, top_k))
+    if let Ok(handle) = tokio::runtime::Handle::try_current() {
+        tokio::task::block_in_place(|| handle.block_on(search_with_validation(query, top_k)))
+    } else {
+        let rt = tokio::runtime::Runtime::new()
+            .map_err(|e| anyhow!("Failed to create tokio runtime: {}", e))?;
+        rt.block_on(search_with_validation(query, top_k))
+    }
 }
 
 // ============================================================================
