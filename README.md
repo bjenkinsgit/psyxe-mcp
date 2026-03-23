@@ -37,9 +37,13 @@ cargo build --release
 # Build Swift helpers (faster Reminders + Contacts access)
 cd swift/reminders-helper && swift build -c release && cd ../..
 cd swift/contacts-helper && swift build -c release && cd ../..
+
+# Copy helpers next to the binary so it works from any directory
+cp swift/reminders-helper/.build/release/reminders-helper target/release/
+cp swift/contacts-helper/.build/release/contacts-helper target/release/
 ```
 
-The binary is at `target/release/psyxe-mcp`.
+The binary and helpers are in `target/release/`. Use the full path when configuring your MCP client.
 
 ### Install Apple Shortcuts (optional)
 

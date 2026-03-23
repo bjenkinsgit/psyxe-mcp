@@ -146,6 +146,11 @@ fn find_helper_binary() -> Option<PathBuf> {
     // 3. Relative to the running executable
     if let Ok(exe) = std::env::current_exe() {
         if let Some(exe_dir) = exe.parent() {
+            // Same directory as the binary (MCP server standalone install)
+            let p = exe_dir.join("contacts-helper");
+            if p.is_file() {
+                return Some(p);
+            }
             // Bundled macOS app: Contents/MacOS/../Helpers/contacts-helper (preferred)
             let p = exe_dir.join("../Helpers/contacts-helper");
             if p.is_file() {
