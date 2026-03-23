@@ -4,5 +4,3 @@
 *.swo
 .env
 .bwj_env
-swift/*/.build/
-swift/*/Package.resolved

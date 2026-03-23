@@ -142,31 +142,32 @@ pub fn dispatch_tool(tool: &str, args: &Value, executor: Option<&ToolExecutor>) 
         "notes_index_stats", "notes_smart_search",
     ];
     if notes_tools.contains(&tool) {
-        if apple_notes::is_available() {
-            let action = match tool {
-                "search_notes" => "smart_search",
-                "list_notes" => "list",
-                "get_note" => "get",
-                "open_note" => "open",
-                "notes_index" => {
-                    match args.get("action").and_then(|v| v.as_str()).unwrap_or("check") {
-                        "build" => "index_build",
-                        _ => "index_check",
-                    }
-                }
-                "notes_tags" => "tags",
-                "notes_search_by_tag" => "search_by_tag",
-                "notes_semantic_search" => "semantic_search",
-                "notes_rebuild_index" => "rebuild_memvid_index",
-                "notes_index_stats" => "memvid_stats",
-                "notes_smart_search" => "smart_search",
-                _ => unreachable!(),
-            };
-            return Some(match apple_notes::execute_apple_notes(action, args) {
-                Ok(result) => (true, result),
-                Err(e) => (false, format!("Apple Notes error: {}", e)),
-            });
+        if !apple_notes::is_available() {
+            return Some((false, "Apple Notes is not available (macOS with AppleScript required)".to_string()));
         }
+        let action = match tool {
+            "search_notes" => "smart_search",
+            "list_notes" => "list",
+            "get_note" => "get",
+            "open_note" => "open",
+            "notes_index" => {
+                match args.get("action").and_then(|v| v.as_str()).unwrap_or("check") {
+                    "build" => "index_build",
+                    _ => "index_check",
+                }
+            }
+            "notes_tags" => "tags",
+            "notes_search_by_tag" => "search_by_tag",
+            "notes_semantic_search" => "semantic_search",
+            "notes_rebuild_index" => "rebuild_memvid_index",
+            "notes_index_stats" => "memvid_stats",
+            "notes_smart_search" => "smart_search",
+            _ => unreachable!(),
+        };
+        return Some(match apple_notes::execute_apple_notes(action, args) {
+            Ok(result) => (true, result),
+            Err(e) => (false, format!("Apple Notes error: {}", e)),
+        });
     }
 
     // Apple Reminders tools
@@ -178,28 +179,29 @@ pub fn dispatch_tool(tool: &str, args: &Value, executor: Option<&ToolExecutor>) 
         "create_reminder_list", "delete_reminder_list",
     ];
     if reminders_tools.contains(&tool) {
-        if apple_reminders::is_available() {
-            let action = match tool {
-                "list_reminder_lists" => "list_lists",
-                "search_reminders" => "search",
-                "list_reminders" => "list",
-                "get_reminder" => "get",
-                "create_reminder" => "create",
-                "create_reminders_batch" => "create_batch",
-                "complete_reminder" => "complete",
-                "delete_reminder" => "delete",
-                "edit_reminder" => "edit",
-                "edit_reminders_batch" => "edit_batch",
-                "open_reminders" => "open",
-                "create_reminder_list" => "create_list",
-                "delete_reminder_list" => "delete_list",
-                _ => unreachable!(),
-            };
-            return Some(match apple_reminders::execute_apple_reminders(action, args) {
-                Ok(result) => (true, result),
-                Err(e) => (false, format!("Apple Reminders error: {}", e)),
-            });
+        if !apple_reminders::is_available() {
+            return Some((false, "Apple Reminders is not available. Build the Swift helper: cd swift/reminders-helper && swift build -c release".to_string()));
         }
+        let action = match tool {
+            "list_reminder_lists" => "list_lists",
+            "search_reminders" => "search",
+            "list_reminders" => "list",
+            "get_reminder" => "get",
+            "create_reminder" => "create",
+            "create_reminders_batch" => "create_batch",
+            "complete_reminder" => "complete",
+            "delete_reminder" => "delete",
+            "edit_reminder" => "edit",
+            "edit_reminders_batch" => "edit_batch",
+            "open_reminders" => "open",
+            "create_reminder_list" => "create_list",
+            "delete_reminder_list" => "delete_list",
+            _ => unreachable!(),
+        };
+        return Some(match apple_reminders::execute_apple_reminders(action, args) {
+            Ok(result) => (true, result),
+            Err(e) => (false, format!("Apple Reminders error: {}", e)),
+        });
     }
 
     // Apple Contacts tools
@@ -208,22 +210,23 @@ pub fn dispatch_tool(tool: &str, args: &Value, executor: Option<&ToolExecutor>) 
         "get_contact", "create_contact", "edit_contact", "delete_contact",
     ];
     if contacts_tools.contains(&tool) {
-        if apple_contacts::is_available() {
-            let action = match tool {
-                "list_contact_groups" => "list-groups",
-                "search_contacts"    => "search",
-                "list_contacts"      => "list",
-                "get_contact"        => "get",
-                "create_contact"     => "create",
-                "edit_contact"       => "edit",
-                "delete_contact"     => "delete",
-                _ => unreachable!(),
-            };
-            return Some(match apple_contacts::execute_apple_contacts(action, args) {
-                Ok(result) => (true, result),
-                Err(e) => (false, format!("Apple Contacts error: {}", e)),
-            });
+        if !apple_contacts::is_available() {
+            return Some((false, "Apple Contacts is not available. Build the Swift helper: cd swift/contacts-helper && swift build -c release".to_string()));
         }
+        let action = match tool {
+            "list_contact_groups" => "list-groups",
+            "search_contacts"    => "search",
+            "list_contacts"      => "list",
+            "get_contact"        => "get",
+            "create_contact"     => "create",
+            "edit_contact"       => "edit",
+            "delete_contact"     => "delete",
+            _ => unreachable!(),
+        };
+        return Some(match apple_contacts::execute_apple_contacts(action, args) {
+            Ok(result) => (true, result),
+            Err(e) => (false, format!("Apple Contacts error: {}", e)),
+        });
     }
 
     // Weather (Apple WeatherKit primary, Open-Meteo fallback)

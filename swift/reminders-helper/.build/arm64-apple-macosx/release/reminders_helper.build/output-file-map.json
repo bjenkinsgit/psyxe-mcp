@@ -1,0 +1,103 @@
+{
+  "": {
+    "dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/reminders_helper.d",
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/reminders_helper.o",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/master.swiftdeps"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CompleteReminder.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CompleteReminder.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CompleteReminder~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CompleteReminder.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CompleteReminder.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateBatch.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateBatch.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateBatch~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateBatch.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateBatch.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateList.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateList.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateList~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateList.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateList.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateReminder.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateReminder.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateReminder~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateReminder.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/CreateReminder.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteList.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/DeleteList.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/DeleteList~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/DeleteList.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/DeleteList.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteReminder.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/DeleteReminder.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/DeleteReminder~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/DeleteReminder.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/DeleteReminder.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditBatch.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EditBatch.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EditBatch~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EditBatch.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EditBatch.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditReminder.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EditReminder.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EditReminder~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EditReminder.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EditReminder.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EventKitStore.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EventKitStore.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EventKitStore~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EventKitStore.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/EventKitStore.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/GetReminder.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/GetReminder.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/GetReminder~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/GetReminder.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/GetReminder.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListLists.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/ListLists.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/ListLists~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/ListLists.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/ListLists.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListReminders.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/ListReminders.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/ListReminders~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/ListReminders.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/ListReminders.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/OpenReminders.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/OpenReminders.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/OpenReminders~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/OpenReminders.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/OpenReminders.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/Search.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/Search.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/Search~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/Search.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/Search.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/SetURL.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/SetURL.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/SetURL~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/SetURL.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/SetURL.dia"
+  },
+  "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/main.swift": {
+    "object": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/main.swift.o",
+    "swiftmodule": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/main.swiftdeps",
+    "diagnostics": "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/arm64-apple-macosx/release/reminders_helper.build/main.dia"
+  }
+}

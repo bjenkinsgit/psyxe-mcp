@@ -1,0 +1,408 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.reminders-helper-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/sources",
+      "importPath" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CompleteReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateBatch.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateList.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteList.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditBatch.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EventKitStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/GetReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListLists.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListReminders.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/OpenReminders.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/Search.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/SetURL.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/main.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "reminders_helper",
+      "moduleOutputPath" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/Modules/reminders_helper.swiftmodule",
+      "objects" : [
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/CompleteReminder.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/CreateBatch.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/CreateList.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/CreateReminder.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/DeleteList.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/DeleteReminder.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/EditBatch.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/EditReminder.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/EventKitStore.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/GetReminder.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/ListLists.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/ListReminders.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/OpenReminders.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/Search.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/SetURL.swift.o",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/main.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "reminders_helper_main",
+        "-swift-version",
+        "5",
+        "-Xfrontend",
+        "-experimental-lazy-typecheck",
+        "-Xfrontend",
+        "-experimental-skip-all-function-bodies",
+        "-Xfrontend",
+        "-experimental-allow-module-with-compiler-errors",
+        "-Xfrontend",
+        "-empty-abi-descriptor",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "reminders_helper"
+      ],
+      "outputFileMapPath" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/Modules/reminders_helper.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : true,
+      "sources" : [
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CompleteReminder.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateBatch.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateList.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateReminder.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteList.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteReminder.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditBatch.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditReminder.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EventKitStore.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/GetReminder.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListLists.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListReminders.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/OpenReminders.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/Search.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/SetURL.swift",
+        "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/main.swift"
+      ],
+      "tempsPath" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "reminders_helper" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "reminders_helper",
+      "-package-name",
+      "reminders_helper",
+      "-c",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CompleteReminder.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateBatch.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateList.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateReminder.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteList.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteReminder.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditBatch.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditReminder.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EventKitStore.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/GetReminder.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListLists.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListReminders.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/OpenReminders.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/Search.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/SetURL.swift",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/main.swift",
+      "-I",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "reminders_helper_main",
+      "-swift-version",
+      "5",
+      "-Xfrontend",
+      "-experimental-lazy-typecheck",
+      "-Xfrontend",
+      "-experimental-skip-all-function-bodies",
+      "-Xfrontend",
+      "-experimental-allow-module-with-compiler-errors",
+      "-Xfrontend",
+      "-empty-abi-descriptor",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "reminders_helper",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "reminders_helper" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CompleteReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateBatch.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateList.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/CreateReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteList.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/DeleteReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditBatch.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EditReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/EventKitStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/GetReminder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListLists.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/ListReminders.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/OpenReminders.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/Search.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/SetURL.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/Sources/main.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/reminders_helper.build/sources"
+    },
+    "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/bwj/src/ai/prolog_llm_router/swift/reminders-helper/.build/index-build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}
