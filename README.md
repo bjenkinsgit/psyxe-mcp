@@ -364,6 +364,8 @@ The server monitors for changes and will prompt your AI assistant to rebuild the
 
 Apache 2.0 — see [LICENSE](LICENSE).
 
+This project uses FFmpeg at runtime for ProRes video encoding only (LGPL codec). No GPL-licensed codecs (x264, x265, etc.) are used.
+
 ## Credits
 
 Built on [psyxe-mcp-core](crates/mcp-core/), powered by [memvid-rs](https://github.com/bjenkinsgit/memvid-rs) for semantic search.
