@@ -74,11 +74,33 @@ pub struct FileAccess {
 #[allow(dead_code)] // Individual check methods reserved for future use (e.g., biometric v2)
 impl AccessConfig {
     /// Load from disk. Returns default (full access) if file doesn't exist.
+    ///
+    /// Warns (and refuses to load) if the file is group- or world-writable,
+    /// since a malicious process could escalate its own access rights.
     pub fn load() -> Result<Self> {
         let path = config_path();
         if !path.exists() {
             return Ok(Self::default());
         }
+
+        // Reject group/world-writable config files (prevents privilege escalation)
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            let meta = std::fs::metadata(&path)
+                .with_context(|| format!("Failed to stat {}", path.display()))?;
+            let mode = meta.permissions().mode();
+            if mode & 0o022 != 0 {
+                anyhow::bail!(
+                    "Refusing to load {}: file is group- or world-writable (mode {:o}). \
+                     Fix with: chmod 600 {}",
+                    path.display(),
+                    mode & 0o777,
+                    path.display(),
+                );
+            }
+        }
+
         let content = std::fs::read_to_string(&path)
             .with_context(|| format!("Failed to read {}", path.display()))?;
         let config: Self = toml::from_str(&content)
@@ -87,16 +109,30 @@ impl AccessConfig {
     }
 
     /// Save to disk, creating parent directories if needed.
+    /// Sets owner-only permissions (0600) on the file to prevent tampering.
     pub fn save(&self) -> Result<()> {
         let path = config_path();
         if let Some(parent) = path.parent() {
             std::fs::create_dir_all(parent)
                 .with_context(|| format!("Failed to create {}", parent.display()))?;
+            // Restrict directory to owner-only
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                let _ = std::fs::set_permissions(parent, std::fs::Permissions::from_mode(0o700));
+            }
         }
         let content = toml::to_string_pretty(self)
             .context("Failed to serialize access config")?;
-        std::fs::write(&path, content)
+        std::fs::write(&path, &content)
             .with_context(|| format!("Failed to write {}", path.display()))?;
+        // Set owner-only read/write (prevents group/world from modifying access rights)
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o600))
+                .with_context(|| format!("Failed to set permissions on {}", path.display()))?;
+        }
         Ok(())
     }
 

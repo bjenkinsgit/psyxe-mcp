@@ -193,6 +193,45 @@ async fn main() -> Result<()> {
         || access_config.notes.is_some();
     if has_restrictions {
         tracing::info!("Access restrictions active from ~/.psyxe/access.toml");
+
+        // Seed the core AccessStore cache so that core-level validation
+        // (e.g., validate_source_access in apple_contacts.rs) sees the same
+        // restrictions as the MCP-layer access filter.
+        let reminder_lists: Vec<(String, bool)> = access_config
+            .reminders
+            .as_ref()
+            .map(|r| {
+                r.allowed_lists
+                    .iter()
+                    .map(|name| {
+                        let writable = r
+                            .writable_lists
+                            .iter()
+                            .any(|w| w.eq_ignore_ascii_case(name));
+                        (name.clone(), writable)
+                    })
+                    .collect()
+            })
+            .unwrap_or_default();
+
+        let contact_sources: Vec<(String, String, bool)> = access_config
+            .contacts
+            .as_ref()
+            .map(|c| {
+                c.allowed_groups
+                    .iter()
+                    .map(|name| {
+                        let writable = c
+                            .writable_groups
+                            .iter()
+                            .any(|w| w.eq_ignore_ascii_case(name));
+                        (name.clone(), "group".to_string(), writable)
+                    })
+                    .collect()
+            })
+            .unwrap_or_default();
+
+        psyxe_mcp_core::access_store::AccessStore::seed_cache_from_lists(reminder_lists, contact_sources);
     }
 
     // Load tools config (embedded at compile time, with disk override for development)

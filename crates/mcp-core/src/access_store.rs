@@ -1039,6 +1039,56 @@ impl AccessStore {
         }
     }
 
+    // ---- Cache Seeding (for MCP server) ----
+
+    /// Seed the process-level cache with pre-built access data.
+    ///
+    /// This populates the cache without writing to Keychain or any backend.
+    /// Used by the MCP server to bridge its TOML-based `AccessConfig` into the
+    /// core `AccessStore` so that core-level validation (e.g., `validate_source_access`
+    /// in `apple_contacts.rs`) sees the same restrictions.
+    ///
+    /// Must be called at startup before any tool dispatch.
+    pub fn seed_cache_from_lists(
+        reminder_lists: Vec<(String, bool)>,        // (name, writable)
+        contact_sources: Vec<(String, String, bool)>, // (name, source_type, writable)
+    ) {
+        let now = chrono::Utc::now().to_rfc3339();
+        let mut data = AccessData::default();
+
+        for (name, writable) in reminder_lists {
+            data.reminder_lists.insert(
+                name,
+                ReminderListEntry {
+                    enabled: true,
+                    allowed_at: now.clone(),
+                    guidance: None,
+                },
+            );
+            // Writable flag is on the entry — but ReminderListEntry doesn't have one,
+            // so writable reminders are enforced at the MCP filter layer only.
+            let _ = writable; // suppress unused warning
+        }
+
+        for (name, source_type, writable) in contact_sources {
+            data.contact_sources.insert(
+                name,
+                ContactSourceEntry {
+                    enabled: true,
+                    allowed_at: now.clone(),
+                    source_type,
+                    container_name: None,
+                    guidance: None,
+                    writable,
+                },
+            );
+        }
+
+        let mut cache = CACHE.lock().unwrap();
+        *cache = Some(data);
+        tracing::info!("AccessStore: cache seeded from external config");
+    }
+
     // ---- Test Helpers ----
 
     /// Inject data directly into the cache (for tests that don't touch Keychain).
