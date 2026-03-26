@@ -4,6 +4,8 @@ An [MCP server](https://modelcontextprotocol.io/) that gives AI assistants acces
 
 All tools run locally via macOS-native APIs (AppleScript, EventKit, Contacts framework). No data leaves your Mac. No API keys required.
 
+**New to MCP?** Check out the [FAQ](FAQ.md) for answers to common questions about what this is, whether it works with your setup, and how your data stays private.
+
 ## Video Tutorials
 
 | | |
