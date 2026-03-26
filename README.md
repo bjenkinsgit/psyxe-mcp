@@ -4,6 +4,15 @@ An [MCP server](https://modelcontextprotocol.io/) that gives AI assistants acces
 
 All tools run locally via macOS-native APIs (AppleScript, EventKit, Contacts framework). No data leaves your Mac. No API keys required.
 
+## Video Tutorials
+
+| | |
+|---|---|
+| [![Notes & Semantic Search](https://img.youtube.com/vi/Ha-O8jwoh9E/mqdefault.jpg)](https://youtu.be/Ha-O8jwoh9E) | [**Apple Notes & Semantic Search**](https://youtu.be/Ha-O8jwoh9E) — Connect your AI to Apple Notes with BERT-powered semantic search |
+| [![Apple Contacts](https://img.youtube.com/vi/POjUyFA7wDI/mqdefault.jpg)](https://youtu.be/POjUyFA7wDI) | [**Apple Contacts**](https://youtu.be/POjUyFA7wDI) — Search, create, and manage contacts from your AI assistant |
+| [![Apple Reminders](https://img.youtube.com/vi/AgcxHeTji1k/mqdefault.jpg)](https://youtu.be/AgcxHeTji1k) | [**Apple Reminders**](https://youtu.be/AgcxHeTji1k) — Full CRUD for reminders and lists via any MCP client |
+| [![Access Control](https://img.youtube.com/vi/ApIAIc4MQUI/mqdefault.jpg)](https://youtu.be/ApIAIc4MQUI) | [**Access Control**](https://youtu.be/ApIAIc4MQUI) — Configure exactly which data your AI can access |
+
 ## What Can It Do?
 
 | Category | Tools | Description |
