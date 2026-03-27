@@ -106,6 +106,25 @@ pub fn filter_results(config: &AccessConfig, tool_name: &str, result: &str) -> S
             filter_json_array(&mut parsed, "notes", "folder", &allowed);
             update_count(&mut parsed, "notes");
         }
+    } else if tool_name == "get_note" {
+        // Single note retrieval by ID — check folder in the response
+        if let Some(allowed) = config.allowed_notes_folders() {
+            let folder = parsed
+                .get("note")
+                .and_then(|n| n.get("folder"))
+                .and_then(|f| f.as_str())
+                .unwrap_or("");
+            if !folder.is_empty() && !allowed.contains(&folder.to_lowercase()) {
+                // Replace with an access-denied error instead of the note content
+                return serde_json::to_string(&serde_json::json!({
+                    "error": format!(
+                        "Access denied: note is in folder \"{}\" which is not in the allowed list.",
+                        folder
+                    )
+                }))
+                .unwrap_or_else(|_| result.to_string());
+            }
+        }
     } else if tool_name == "file_search" {
         if let Some(allowed_folders) = config.allowed_file_folders() {
             // Filter results to only include files under allowed folders
@@ -256,6 +275,46 @@ fn check_contact_access(config: &AccessConfig, tool_name: &str, args: &Value) ->
         return AccessCheck::FilterResults;
     }
 
+    // get_contact — requires group or container when restrictions are active,
+    // since contact IDs alone can't be verified against the allowed group list.
+    // The core layer also enforces this, but we reject early at the MCP layer.
+    if tool_name == "get_contact" {
+        let has_group = args.get("group").and_then(|g| g.as_str()).is_some_and(|s| !s.is_empty());
+        let has_container = args
+            .get("container")
+            .and_then(|c| c.as_str())
+            .is_some_and(|s| !s.is_empty());
+        if !has_group && !has_container {
+            return AccessCheck::Denied(
+                "Access denied: a 'group' or 'container' parameter is required when \
+                 contact restrictions are active."
+                    .to_string(),
+            );
+        }
+        if let Some(group) = args.get("group").and_then(|g| g.as_str()) {
+            if !restrictions.allowed_groups.iter().any(|g| g.eq_ignore_ascii_case(group)) {
+                return AccessCheck::Denied(format!(
+                    "Access denied: contact group \"{}\" is not in the allowed list.",
+                    group,
+                ));
+            }
+        }
+        if let Some(container) = args.get("container").and_then(|c| c.as_str()) {
+            if !has_group
+                && !restrictions
+                    .allowed_groups
+                    .iter()
+                    .any(|g| g.eq_ignore_ascii_case(container))
+            {
+                return AccessCheck::Denied(format!(
+                    "Access denied: contact container \"{}\" is not in the allowed list.",
+                    container,
+                ));
+            }
+        }
+        return AccessCheck::Allowed;
+    }
+
     // List/search contacts — if a group is specified, check it
     if matches!(tool_name, "list_contacts" | "search_contacts") {
         if let Some(group) = args.get("group").and_then(|g| g.as_str()) {
@@ -267,7 +326,7 @@ fn check_contact_access(config: &AccessConfig, tool_name: &str, args: &Value) ->
             }
         }
         // Without a group param, contacts can't be filtered by group post-hoc.
-        // We allow the call but note this is a limitation.
+        // The core layer enforces the group requirement when restrictions are active.
         return AccessCheck::Allowed;
     }
 
@@ -393,11 +452,40 @@ fn check_note_access(config: &AccessConfig, tool_name: &str, args: &Value) -> Ac
         return AccessCheck::FilterResults;
     }
 
-    // get_note / open_note — we can't easily check folder pre-call since they take
-    // a note ID, not a folder. Allow the call; the note content won't reveal folder
-    // structure beyond what search already showed.
-    if matches!(tool_name, "get_note" | "open_note") {
+    // create_note — write operation, validate folder access
+    if tool_name == "create_note" {
+        if let Some(folder) = args.get("folder").and_then(|f| f.as_str()) {
+            if !restrictions.allowed_folders.iter().any(|f| f.eq_ignore_ascii_case(folder)) {
+                return AccessCheck::Denied(format!(
+                    "Access denied: notes folder \"{}\" is not in the allowed list.",
+                    folder,
+                ));
+            }
+            if !restrictions.writable_folders.is_empty()
+                && !restrictions.writable_folders.iter().any(|f| f.eq_ignore_ascii_case(folder))
+            {
+                return AccessCheck::Denied(format!(
+                    "Access denied: notes folder \"{}\" is read-only. \
+                     Writable folders: {}",
+                    folder,
+                    format_list(&restrictions.writable_folders),
+                ));
+            }
+        } else {
+            // No folder specified — deny when restrictions are active
+            return AccessCheck::Denied(
+                "Access denied: a folder must be specified when notes restrictions are active. \
+                 Use one of the allowed folders."
+                    .to_string(),
+            );
+        }
         return AccessCheck::Allowed;
+    }
+
+    // get_note / open_note — retrieve by ID. Post-call filtering will verify
+    // the note's folder against the allowed list before returning content.
+    if matches!(tool_name, "get_note" | "open_note") {
+        return AccessCheck::FilterResults;
     }
 
     // Index management tools

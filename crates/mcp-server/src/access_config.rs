@@ -238,14 +238,48 @@ impl AccessConfig {
     }
 }
 
-/// Check if `path` is under `folder` (prefix match on canonicalized paths).
+/// Normalize a path by resolving `.` and `..` components logically
+/// (without touching the filesystem, so it works for paths that don't exist yet).
+fn normalize_path(path: &str) -> String {
+    use std::path::{Component, PathBuf};
+    let mut result = PathBuf::new();
+    for component in std::path::Path::new(path).components() {
+        match component {
+            Component::ParentDir => {
+                // Go up one level (pop), but never above root
+                result.pop();
+            }
+            Component::CurDir => {
+                // Skip `.`
+            }
+            other => {
+                result.push(other);
+            }
+        }
+    }
+    result.to_string_lossy().to_string()
+}
+
+/// Check if `path` is under `folder` (prefix match on normalized paths).
+///
+/// Normalizes both paths first to prevent traversal attacks via `..` segments.
+/// For paths that exist on disk, also resolves symlinks to prevent symlink-based escapes.
 pub fn is_path_under(path: &str, folder: &str) -> bool {
+    // Try filesystem canonicalization first (resolves symlinks).
+    // Fall back to logical normalization for paths that don't exist yet.
+    let canonical_path = std::fs::canonicalize(path)
+        .map(|p| p.to_string_lossy().to_string())
+        .unwrap_or_else(|_| normalize_path(path));
+    let canonical_folder = std::fs::canonicalize(folder)
+        .map(|p| p.to_string_lossy().to_string())
+        .unwrap_or_else(|_| normalize_path(folder));
+
     // Normalize: ensure folder ends with / for prefix matching
-    let folder_prefix = if folder.ends_with('/') {
-        folder.to_string()
+    let folder_prefix = if canonical_folder.ends_with('/') {
+        canonical_folder.clone()
     } else {
-        format!("{}/", folder)
+        format!("{}/", canonical_folder)
     };
     // Path is under folder if it starts with folder/ or equals folder exactly
-    path.starts_with(&folder_prefix) || path == folder
+    canonical_path.starts_with(&folder_prefix) || canonical_path == canonical_folder
 }
