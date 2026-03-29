@@ -146,7 +146,26 @@ command = "psyxe-mcp"
 
 ## Access Control
 
-By default, the MCP server has full access to all your Notes, Reminders, Contacts, and files. You can restrict this with the built-in access control CLI.
+By default, the MCP server has full access to all your Notes, Reminders, Contacts, and files. To restrict what your AI can see, use the built-in access control CLI to create and manage `~/.psyxe/access.toml`.
+
+No manual file editing is needed — the CLI creates the file with secure permissions (owner-only read/write) on first use.
+
+### Quick Start
+
+```bash
+# 1. See what's available
+psyxe-mcp access discover reminders
+psyxe-mcp access discover notes
+
+# 2. Grant access to only what the AI should see
+psyxe-mcp access grant reminders "Work"
+psyxe-mcp access grant notes "Projects"
+
+# 3. Verify your restrictions
+psyxe-mcp access list
+```
+
+Once any rule is set for a category, only explicitly granted resources are accessible — everything else in that category is denied.
 
 ### Discover What's Available
 
@@ -190,7 +209,7 @@ psyxe-mcp access list
 psyxe-mcp access reset
 ```
 
-Access rules are stored in `~/.psyxe/access.toml`. Once any rule is set for a category, only explicitly granted resources are accessible — everything else is denied.
+Access rules are stored in `~/.psyxe/access.toml` with owner-only permissions (`chmod 600`). The server refuses to load the config if it is group- or world-readable, preventing other processes from tampering with access rights.
 
 ## Semantic Search
 
