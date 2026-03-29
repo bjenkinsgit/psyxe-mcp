@@ -1212,6 +1212,7 @@ pub fn search_json(query: &str, top_k: usize) -> Result<String> {
         "results": search_result.results.iter().map(|r| json!({
             "note_id": r.note_id,
             "title": r.title,
+            "folder": r.folder,
             "snippet": r.snippet,
             "score": r.score,
         })).collect::<Vec<_>>()

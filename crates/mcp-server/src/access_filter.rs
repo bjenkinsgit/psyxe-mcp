@@ -114,10 +114,16 @@ pub fn filter_results(config: &AccessConfig, tool_name: &str, result: &str) -> S
     } else if tool_name == "list_contacts" || tool_name == "search_contacts" {
         // Contact results don't include group info, so we can't filter post-hoc.
         // Access is enforced via pre-call check on the group parameter.
-    } else if tool_name == "list_notes" || tool_name == "search_notes" {
+    } else if tool_name == "list_notes" {
         if let Some(allowed) = config.allowed_notes_folders() {
             filter_json_array(&mut parsed, "notes", "folder", &allowed);
             update_count(&mut parsed, "notes");
+        }
+    } else if tool_name == "search_notes" {
+        // search_notes returns results in "results", not "notes"
+        if let Some(allowed) = config.allowed_notes_folders() {
+            filter_json_array(&mut parsed, "results", "folder", &allowed);
+            update_count(&mut parsed, "results");
         }
     } else if tool_name == "notes_smart_search" || tool_name == "notes_semantic_search" {
         if let Some(allowed) = config.allowed_notes_folders() {

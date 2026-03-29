@@ -374,6 +374,7 @@ pub fn search_notes(query: &str, folder: Option<&str>) -> Result<String> {
         "results": records.iter().map(|r| json!({
             "note_id": r.id,
             "title": r.title,
+            "folder": r.folder,
             "snippet": r.snippet,
         })).collect::<Vec<_>>()
     }))?)
