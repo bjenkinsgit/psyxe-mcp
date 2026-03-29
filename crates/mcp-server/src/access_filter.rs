@@ -77,10 +77,34 @@ pub fn filter_results(config: &AccessConfig, tool_name: &str, result: &str) -> S
             filter_json_array(&mut parsed, "lists", "name", &allowed);
             update_count(&mut parsed, "lists");
         }
-    } else if tool_name == "list_reminders" || tool_name == "search_reminders" {
+    } else if tool_name == "list_reminders" {
         if let Some(allowed) = config.allowed_reminder_lists() {
             filter_json_array(&mut parsed, "reminders", "list", &allowed);
             update_count(&mut parsed, "reminders");
+        }
+    } else if tool_name == "search_reminders" {
+        // search_reminders returns results in "results", not "reminders"
+        if let Some(allowed) = config.allowed_reminder_lists() {
+            filter_json_array(&mut parsed, "results", "list", &allowed);
+            update_count(&mut parsed, "results");
+        }
+    } else if tool_name == "get_reminder" {
+        // Single reminder retrieval — check list in the response
+        if let Some(allowed) = config.allowed_reminder_lists() {
+            let list = parsed
+                .get("reminder")
+                .and_then(|r| r.get("list"))
+                .and_then(|l| l.as_str())
+                .unwrap_or("");
+            if !list.is_empty() && !allowed.contains(&list.to_lowercase()) {
+                return serde_json::to_string(&serde_json::json!({
+                    "error": format!(
+                        "Access denied: reminder is in list \"{}\" which is not in the allowed list.",
+                        list
+                    )
+                }))
+                .unwrap_or_else(|_| result.to_string());
+            }
         }
     } else if tool_name == "list_contact_groups" {
         if let Some(allowed) = config.allowed_contact_groups() {
@@ -214,8 +238,8 @@ fn check_reminder_access(config: &AccessConfig, tool_name: &str, args: &Value) -
         return AccessCheck::Allowed;
     }
 
-    // List/search tools return filtered results
-    if matches!(tool_name, "list_reminder_lists" | "list_reminders" | "search_reminders") {
+    // List/search/get tools return filtered results
+    if matches!(tool_name, "list_reminder_lists" | "list_reminders" | "search_reminders" | "get_reminder") {
         // If a specific list is requested, check it
         if let Some(list) = args.get("list").and_then(|l| l.as_str()) {
             if !restrictions.allowed_lists.iter().any(|l| l.eq_ignore_ascii_case(list)) {
