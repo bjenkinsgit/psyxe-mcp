@@ -3666,7 +3666,7 @@ dependencies = [
 
 [[package]]
 name = "psyxe-mcp"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "anyhow",
  "clap",
@@ -3683,7 +3683,7 @@ dependencies = [
 
 [[package]]
 name = "psyxe-mcp-core"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
