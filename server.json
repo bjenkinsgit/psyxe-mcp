@@ -7,12 +7,12 @@
     "url": "https://github.com/bjenkinsgit/psyxe-mcp",
     "source": "github"
   },
-  "version": "0.1.9",
+  "version": "0.1.10",
   "packages": [
     {
       "registryType": "mcpb",
-      "identifier": "https://github.com/bjenkinsgit/psyxe-mcp/releases/download/v0.1.9/psyxe-mcp-0.1.9-arm64-apple-darwin.mcpb",
-      "fileSha256": "769262d7a4cc8f86139a58ebf02e280f0a1bee4331b02bd06e4aaae68000cadb",
+      "identifier": "https://github.com/bjenkinsgit/psyxe-mcp/releases/download/v0.1.10/psyxe-mcp-0.1.10-arm64-apple-darwin.mcpb",
+      "fileSha256": "1efa804e996a17564304c8e3dbb43cae09024023a4d703652bf956be87c93e95",
       "transport": {
         "type": "stdio"
       }
