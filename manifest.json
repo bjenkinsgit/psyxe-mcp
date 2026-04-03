@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "psyXe MCP Server",
   "description": "Apple ecosystem MCP server — gives AI assistants access to Apple Notes, Reminders, and Contacts with BERT-powered semantic search. Works with any MCP client.",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "author": {
     "name": "bjenkinsgit"
   },
