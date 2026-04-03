@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.bjenkinsgit/psyxe-mcp",
+  "title": "psyXe MCP Server",
+  "description": "Apple ecosystem MCP server \u2014 gives AI assistants access to Apple Notes, Reminders, and Contacts with BERT-powered semantic search. macOS only. No API keys required.",
+  "repository": {
+    "url": "https://github.com/bjenkinsgit/psyxe-mcp",
+    "source": "github"
+  },
+  "version": "0.1.8",
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/bjenkinsgit/psyxe-mcp/releases/download/v0.1.8/psyxe-mcp-0.1.8-arm64-apple-darwin.mcpb",
+      "fileSha256": "141c1f9df44845368f3159e291b9cd96e7f77866bcb6dbc55b5df28a8d557bf6",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
